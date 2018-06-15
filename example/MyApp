@@ -1,0 +1,5 @@
+#!/usr/bin/env php
+<?php
+include 'MyApp.php';
+$console = new \MyApp('MyApp', 'v.0.0.1', 'D:\\servidor\\www\\task_console\\example\\Task\\');
+$console->run();
