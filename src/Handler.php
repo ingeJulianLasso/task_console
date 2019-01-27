@@ -15,11 +15,13 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 namespace TaskConsole;
+
+use Codedungeon\PHPCliColors\Color;
 
 class Handler
 {
-
     private $title;
 
     private $welcome;
@@ -30,10 +32,17 @@ class Handler
 
     private $task_path;
 
+    private $color;
+
     public function __construct(string $title, string $version, string $task_path)
     {
+        $this->color = new Color();
         $this->title = $title;
-        $this->welcome = "Welcome to {$title} {$version} Console";
+        $this->welcome = $this->color->light_white() . "Welcome to " .
+            $this->color->bold_green() . $title .
+            $this->color->bold_yellow() . " {$version}" .
+            $this->color->normal() . $this->color->light_white() . " Console" .
+            $this->color->normal();
         // $this->tasks = array();
         $this->task_path = $task_path;
         $this->argv = (isset($GLOBALS['argv']) === true) ? $GLOBALS['argv'] : array();
@@ -52,11 +61,10 @@ class Handler
             }
         } else {
             $this->printRule();
-            echo "\n {$this->welcome}\n";
+            echo PHP_EOL . " {$this->welcome}" . PHP_EOL;
             $this->printRule();
-            echo "\n USAGE:\n\n";
-            echo "\tphp {$this->title} [--command] [arguments argument:value]\n\n";
-            echo " COMMANDS:\n\n";
+            echo PHP_EOL . $this->color->yellow() . " USAGE:" . $this->color->normal() . PHP_EOL . PHP_EOL;
+            echo "\tphp {$this->title} [--command] [arguments argument:value]" . PHP_EOL;
             $this->printComands();
             $this->printRule();
         }
@@ -97,10 +105,17 @@ class Handler
                 if (preg_match("/-/", $tmp) !== false) {
                     $tmp = preg_replace("/-/", "_", $tmp);
                 }
-                $tmpArray['command'] = (isset($this->tasks['_shorthand'][$tmp]) === true) ? $this->tasks['_shorthand'][$tmp] : $tmp;
-            } else if (preg_match("/:/", $data) !== false) {
+                if (isset($this->tasks['_shorthand'][$tmp]) === true) {
+                    $tmpArray['command'] = $this->tasks['_shorthand'][$tmp];
+                } else {
+                    $tmpArray['command'] = $tmp;
+                }
+            } elseif (preg_match("/:/", $data) !== false) {
                 $tmp = explode(":", $data, 2);
-                $tmpArray['params'][((isset($this->tasks[$tmpArray['command']]['_shorthand_arguments'][$tmp[0]]) === true) ? $this->tasks[$tmpArray['command']]['_shorthand_arguments'][$tmp[0]] : $tmp[0])] = $tmp[1];
+                $tmpArray['params'][
+                    ((isset($this->tasks[$tmpArray['command']]['_shorthand_arguments'][$tmp[0]]) === true)
+                    ? $this->tasks[$tmpArray['command']]['_shorthand_arguments'][$tmp[0]] : $tmp[0])
+                ] = $tmp[1];
             }
         }
         $this->argv = $tmpArray;
@@ -112,15 +127,25 @@ class Handler
             foreach ($this->tasks as $command => $data) {
                 if ($command !== '_shorthand') {
                     $shorthand = (isset($data['_shorthand']) === true) ? "-{$data['_shorthand']} " : null;
-                    echo " --{$command}\t\t{$shorthand}{$data['_description']}\n";
+                    $command = str_pad(' --' . $command, 25);
+                    echo $this->color->yellow() . PHP_EOL . " COMMAND:" . $this->color->normal() . PHP_EOL . PHP_EOL;
+                    echo $this->color->green() . $command . $shorthand . $this->color->normal() . $this->color->light_white() . $data['_description'] . PHP_EOL . $this->color->normal();
+
+
                     if (isset($data['_arguments']) === true and count($data['_arguments']) > 0) {
-                        echo "\n ARGUMENTS:\n";
+                        echo PHP_EOL . $this->color->yellow() . " ARGUMENTS:" . PHP_EOL . PHP_EOL .
+                            $this->color->normal();
                         foreach ($data['_arguments'] as $argument => $data2) {
                             $shorthand = (isset($data2['_shorthand']) === true) ? "{$data2['_shorthand']} " : null;
-                            echo " {$argument}\t{$shorthand}{$data2['_description']}\n";
+                            $argument = str_pad($argument, 25);
+                            echo $this->color->green() . " {$argument}{$shorthand}" .
+                                $this->color->normal() . $this->color->light_white() . "{$data2['_description']}" .
+                                PHP_EOL . $this->color->normal();
                         }
-                        echo "\n";
                     }
+
+
+
                 }
             }
         }
@@ -134,9 +159,11 @@ class Handler
 
     private function printRule(): void
     {
+        echo $this->color->light_white();
         for ($x = 0; $x < 80; $x ++) {
             echo "-";
         }
+        echo $this->color->normal();
         // echo "\n";
     }
 }

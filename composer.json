@@ -1,50 +1,49 @@
 {
-	"require" : {
-		"php" : "^7.2.0"
-	},
-	"name" : "sena/task_console",
-	"description" : "Task Console es un componente en PHP7.2 para facilitar la creación y ejecución de tareas en consola",
-	"version" : "0.0.1",
-	"autoload" : {
-		"psr-4" : {
-			"TaskConsole\\" : "src"
-		}
-	},
-	"type" : "project",
-	"homepage" : "https://ingeJulianLasso.github.io/task_console/",
-	"license" : "Apache-2.0",
-	"minimum-stability" : "stable",
-	"authors" : [{
-			"name" : "Julian Andrés Lasso Figueroa",
-			"email" : "jalasso69@misena.edu.co",
-			"role" : "Developer"
-		}, {
-			"name" : "Ivon Maritza Upegui Gomez",
-			"email" : "imupegui@misena.edu.co",
-			"role" : "Tester"
-		}
-	],
-	"keywords" : [
-		"sena",
-		"php7",
-		"adsi",
-		"cta",
-		"lasso",
-		"jalf",
-		"jalfcolombia",
-		"console",
-		"task"
-	],
-	"support" : {
-		"email" : "jalasso69@misena.edu.co",
-		"issues" : "https://github.com/ingeJulianLasso/task_console/issues",
-		"wiki" : "https://github.com/ingeJulianLasso/task_console/wiki",
-		"source" : "https://github.com/ingeJulianLasso/task_console/"
-	},
-	"repositories" : [{
-			"type" : "git",
-			"url" : "https://github.com/ingeJulianLasso/task_console/",
-			"name" : "task_console"
-		}
-	]
+  "require": {
+    "php": "^7.2.0",
+    "codedungeon/php-cli-colors": "^1.10"
+  },
+  "name": "sena/task_console",
+  "description": "Task Console es un componente en PHP7.2 para facilitar la creación y ejecución de tareas en consola",
+  "version": "0.0.2",
+  "autoload": {
+    "psr-4": {
+      "TaskConsole\\": "src"
+    }
+  },
+  "type": "project",
+  "homepage": "https://ingeJulianLasso.github.io/task_console/",
+  "license": "Apache-2.0",
+  "minimum-stability": "stable",
+  "authors": [{
+    "name": "Julian Andrés Lasso Figueroa",
+    "email": "jalasso69@misena.edu.co",
+    "role": "Developer"
+  }, {
+    "name": "Ivon Maritza Upegui Gomez",
+    "email": "imupegui@misena.edu.co",
+    "role": "Tester"
+  }],
+  "keywords": [
+    "sena",
+    "php7",
+    "adsi",
+    "cta",
+    "lasso",
+    "jalf",
+    "jalfcolombia",
+    "console",
+    "task"
+  ],
+  "support": {
+    "email": "jalasso69@misena.edu.co",
+    "issues": "https://github.com/ingeJulianLasso/task_console/issues",
+    "wiki": "https://github.com/ingeJulianLasso/task_console/wiki",
+    "source": "https://github.com/ingeJulianLasso/task_console/"
+  },
+  "repositories": [{
+    "type": "git",
+    "url": "https://github.com/ingeJulianLasso/task_console/",
+    "name": "task_console"
+  }]
 }
