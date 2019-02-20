@@ -63,8 +63,8 @@ class Handler
             $this->printRule();
             echo PHP_EOL . " {$this->welcome}" . PHP_EOL;
             $this->printRule();
-            echo PHP_EOL . PHP_EOL . $this->color->yellow() . " USAGE:" . $this->color->normal() . PHP_EOL . PHP_EOL;
-            echo "\tphp {$this->title} [--command] [arguments argument:value]" . PHP_EOL . PHP_EOL;
+            echo PHP_EOL . $this->color->yellow() . " USAGE:" . $this->color->normal() . PHP_EOL . PHP_EOL;
+            echo "\tphp {$this->title} [--command] [arguments argument:value]" . PHP_EOL;
             $this->printComands();
             $this->printRule();
             echo PHP_EOL;
@@ -127,26 +127,26 @@ class Handler
         if (count($this->tasks) > 0) {
             foreach ($this->tasks as $command => $data) {
                 if ($command !== '_shorthand') {
-                    $this->printRule();
-                    echo PHP_EOL;
-                    $shorthand = str_pad("-{$data['_shorthand']}", 4);
-                    $shorthand = (isset($data['_shorthand']) === true) ? $shorthand : null;
-                    $command = " --{$command}";
+                    $shorthand = (isset($data['_shorthand']) === true) ? "-{$data['_shorthand']} " : null;
+                    $command = str_pad(' --' . $command, 25);
                     echo $this->color->yellow() . PHP_EOL . " COMMAND:" . $this->color->normal() . PHP_EOL . PHP_EOL;
-                    echo $this->color->green() . "{$command} | {$shorthand}" . PHP_EOL . $this->color->normal() . $this->color->light_white() . " " . $data['_description'] . PHP_EOL . $this->color->normal();
+                    echo $this->color->green() . $command . $shorthand . $this->color->normal() . $this->color->light_white() . $data['_description'] . PHP_EOL . $this->color->normal();
+
+
                     if (isset($data['_arguments']) === true and count($data['_arguments']) > 0) {
                         echo PHP_EOL . $this->color->yellow() . " ARGUMENTS:" . PHP_EOL . PHP_EOL .
                             $this->color->normal();
                         foreach ($data['_arguments'] as $argument => $data2) {
-                            $shorthand = str_pad($data2['_shorthand'], 3);
-                            $shorthand = (isset($data2['_shorthand']) === true) ? $shorthand : null;
-                            $argument = str_pad($argument, 15);
+                            $shorthand = (isset($data2['_shorthand']) === true) ? "{$data2['_shorthand']} " : null;
+                            $argument = str_pad($argument, 25);
                             echo $this->color->green() . " {$argument}{$shorthand}" .
                                 $this->color->normal() . $this->color->light_white() . "{$data2['_description']}" .
                                 PHP_EOL . $this->color->normal();
                         }
                     }
-                    echo PHP_EOL;
+
+
+
                 }
             }
         }
